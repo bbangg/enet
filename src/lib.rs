@@ -1,6 +1,5 @@
 //! [ENet](https://github.com/lsalzman/enet) transpiled to Rust, and made agnostic to the underlying
-//! socket. Supports [`std::net::UdpSocket`] out of the box. Works in WASM if you bring your own WebRTC
-//! interface or similar.
+//! socket. Supports [`std::net::UdpSocket`] out of the box. 
 //!
 //! Much of the docs are copied from the [ENet Website](http://sauerbraten.org/enet/index.html),
 //! both for convenience, and in case that resource is unavailable for any reason.
