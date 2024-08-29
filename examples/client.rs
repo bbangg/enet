@@ -29,7 +29,7 @@ fn main() {
                 enet::Event::Connect { peer, .. } => {
                     println!("Connected");
                     // loop for 10 times
-                    for _ in 0..1000 {
+                    for _ in 0..10 {
                         let packet = enet::Packet::reliable("hello world".as_bytes());
                         _ = peer.send(0, &packet);
                     }
