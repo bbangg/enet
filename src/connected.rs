@@ -918,7 +918,9 @@ impl<C: Connection> Host<C> {
                                 .write(address.clone(), (buffer[0..size]).to_vec());
                         }
                         Err(_) => {
-                            disconnect = true;
+                            peer.reset();
+                            disconnect_event = Some(peer.id);
+                            break;
                         }
                         _ => {}
                     }
@@ -936,7 +938,6 @@ impl<C: Connection> Host<C> {
         }
         while let Some((packet_address, packet)) = self.host.socket_mut().read() {
             if let Some(peer) = self.peers.get_mut(packet_address.id.0) {
-                let mut disconnect = false;
                 if let Peer {
                     state:
                         PeerState::AwaitingPeer {
@@ -974,9 +975,6 @@ impl<C: Connection> Host<C> {
                     {
                         *last_send = now;
                     }
-                }
-                if disconnect {
-                    peer.disconnect(0);
                 }
             }
         }
@@ -1153,6 +1151,7 @@ impl<C: Connection> Host<C> {
     }
 
     /// See [`Host::now`](`crate::Host::now`).
+    #[must_use]
     pub fn now(&self) -> Duration {
         self.host.now()
     }

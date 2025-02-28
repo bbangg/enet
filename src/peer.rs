@@ -416,3 +416,4 @@ impl<S: Socket> Debug for Peer<S> {
             .finish()
     }
 }
+

@@ -1,3 +1,6 @@
+use rand::{Rng, SeedableRng};
+use rand_chacha::ChaCha20Rng;
+use std::net::IpAddr;
 use std::{
     collections::HashMap,
     convert::Infallible,
@@ -6,9 +9,6 @@ use std::{
     sync::{mpsc, Arc, RwLock},
     time::Duration,
 };
-
-use rand::{Rng, SeedableRng};
-use rand_chacha::ChaCha20Rng;
 
 use crate as enet;
 use crate::{Box, Vec};
@@ -77,6 +77,10 @@ impl enet::Socket for Socket {
             Ok(None)
         }
     }
+
+    fn address(&self) -> Self::Address {
+        0
+    }
 }
 
 impl enet::Address for usize {
@@ -94,6 +98,10 @@ impl enet::Address for usize {
 
     fn port(&self) -> u16 {
         self.port()
+    }
+
+    fn address(&self) -> IpAddr {
+        IpAddr::V4(std::net::Ipv4Addr::new(127, 0, 0, *self as u8))
     }
 }
 
@@ -420,3 +428,4 @@ impl Event {
         }
     }
 }
+
