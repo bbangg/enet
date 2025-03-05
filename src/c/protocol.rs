@@ -2508,4 +2508,3 @@ pub(crate) unsafe fn enet_host_service<S: Socket>(
     }
     Ok(false)
 }
-
